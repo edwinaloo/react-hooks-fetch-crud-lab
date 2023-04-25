@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import QuestionList from "./QuestionList";
 
-function QuestionList() {
+function App() {
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/questions-060")
+      .then((response) => response.json())
+      .then((data) => setQuestions(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <section>
-      <h1>Quiz Questions</h1>
-      <ul>{/* display QuestionItem components here after fetching */}</ul>
-    </section>
+    <div className="App">
+      <QuestionList questions={questions} />
+    </div>
   );
 }
 
-export default QuestionList;
+export default App;
